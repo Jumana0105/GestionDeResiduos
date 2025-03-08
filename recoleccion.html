@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recolección de Residuos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Recolección de Residuos</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="educacion.html">Educación</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Solicita la Recolección</h2>
+            <form id="formRecoleccion">
+                <label for="tipo-residuo">Tipo de Residuo:</label>
+                <select id="tipo-residuo">
+                    <option value="plastico">Plástico</option>
+                    <option value="vidrio">Vidrio</option>
+                    <option value="electronico">Electrónicos</option>
+                    <option value="organico">Orgánico</option>
+                </select>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" required>
+                <button type="submit">Solicitar</button>
+            </form>
+            <p id="mensajeRecoleccion"></p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
