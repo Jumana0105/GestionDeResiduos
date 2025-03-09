@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,7 +16,6 @@
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="reportes.html">Reportes</a></li>
                 <li><a href="mapa.html">Mapa</a></li>
                 <li><a href="recoleccion.html">Recolección</a></li>
                 <li><a href="educacion.html">Educación</a></li>
@@ -25,7 +26,8 @@
 
     <section id="reportes">
         <h2>Reportar un Problema</h2>
-        <form id="formReporte">
+        <!-- Formulario que envía los datos al mismo archivo PHP -->
+        <form method="POST" action="">
             <div class="form-group">
                 <label for="provincia">Provincia:</label>
                 <input type="text" id="provincia" name="provincia" required>
@@ -66,50 +68,58 @@
                 <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
             </div>
 
+            <div class="form-group">
+                <label for="coordenadasDMS">Coordenadas (DMS, opcional):</label>
+                <input type="text" id="coordenadasDMS" name="coordenadasDMS" placeholder="Ejemplo: 9°58'55\"N 84°01'25\"W">
+            </div>
+
             <button type="submit" class="submit-btn">Enviar Reporte</button>
         </form>
 
         <div id="reportesEnviados" class="reportes-enviados">
             <h3>Reportes Enviados</h3>
             <ul id="listaReportes">
+                <!-- Aquí se podrían listar los reportes almacenados si fuera necesario -->
             </ul>
         </div>
-    </section>
+        <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $provincia = $_POST['provincia'];
+    $canton = $_POST['canton'];
+    $distrito = $_POST['distrito'];
+    $barrio = $_POST['barrio'];
+    $nombre = $_POST['nombre'];
+    $email = $_POST['email'];
+    $telefono = $_POST['telefono'];
+    $descripcion = $_POST['descripcion'];
+    $coordenadasDMS = $_POST['coordenadasDMS'];
+    // Definir el nombre del archivo de reportes
+    $file = fopen("Reportes_residuos.txt", "a");
 
+    // Escribir los datos del formulario en el archivo
+    fwrite($file, "Provincia: " . $provincia . "\n");
+    fwrite($file, "Cantón: " . $canton . "\n");
+    fwrite($file, "Distrito: " . $distrito . "\n");
+    fwrite($file, "Barrio: " . $barrio . "\n");
+    fwrite($file, "Nombre: " . $nombre . "\n");
+    fwrite($file, "Email: " . $email . "\n");
+    fwrite($file, "Teléfono: " . $telefono . "\n");
+    fwrite($file, "Descripción: " . $descripcion . "\n");
+    fwrite($file, "Coordenadas: " . $coordenadasDMS . "\n");
+    fwrite($file, "----------------------------\n");
+
+    
+    fclose($file);
+    echo "Reporte guardado exitosamente";
+} else {
+    echo "Error al abrir el archivo.";
+}
+?>
+    </section>
     <footer>
         <p>&copy; 2025 Gestión de Residuos - Grupo 8 - Ambiente Web Cliente Servidor - Universidad Fidelitas</p>
-    </footer>
-
-    <script>
-        document.getElementById('formReporte').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const provincia = document.getElementById('provincia').value;
-            const canton = document.getElementById('canton').value;
-            const distrito = document.getElementById('distrito').value;
-            const barrio = document.getElementById('barrio').value;
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
-            const telefono = document.getElementById('telefono').value;
-            const descripcion = document.getElementById('descripcion').value;
-
-            const reporte = document.createElement('li');
-            reporte.innerHTML = `
-                <strong>Nombre:</strong> ${nombre} <br>
-                <strong>Provincia:</strong> ${provincia} <br>
-                <strong>Cantón:</strong> ${canton} <br>
-                <strong>Distrito:</strong> ${distrito} <br>
-                <strong>Barrio:</strong> ${barrio} <br>
-                <strong>Correo:</strong> ${email} <br>
-                <strong>Teléfono:</strong> ${telefono} <br>
-                <strong>Descripción:</strong> <br> ${descripcion} <br><br>
-            `;
-
-            document.getElementById('listaReportes').appendChild(reporte);
-
-            document.getElementById('formReporte').reset();
-        });
-    </script>
+    </footer> 
+    <script src="reportes.js"></script>
 </body>
-
 </html>
+
