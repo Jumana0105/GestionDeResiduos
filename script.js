@@ -42,31 +42,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inicializar el mapa en Costa Rica
     document.addEventListener("DOMContentLoaded", function () {
-        var map = L.map('map').setView([9.7489, -83.7534], 8); // Costa Rica
+        var map = L.map('map').setView([9.7489, -83.7534], 8); // Mapa centrado en Costa Rica
     
         // Agregar capa base de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
+    
+        // Cargar reportes desde PHP
+        fetch('obtener_reportes.php')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Datos recibidos:", data);  // Depuración: verifica si llegan datos
+    
+                data.forEach(reporte => {
+                    if (reporte["Coordenadas"]) {
+                        let coordenadas = convertirDMSaDecimal(reporte["Coordenadas"]);
+                        if (coordenadas) {
+                            L.marker([coordenadas.lat, coordenadas.lng])
+                                .addTo(map)
+                                .bindPopup(`<strong>${reporte["Descripción"]}</strong><br>${reporte["Provincia"]}, ${reporte["Cantón"]}`);
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Error al cargar reportes:", error));
     });
     
-
-    // Cargar reportes desde localStorage y agregar marcadores al mapa
-    var reportes = JSON.parse(localStorage.getItem('reportes')) || [];
-    reportes.forEach(function(reporte) {
-        L.marker([reporte.lat, reporte.lon]).addTo(map)
-            .bindPopup(`<strong>${reporte.descripcion}</strong><br>${reporte.direccion}`);
-    });
-
-    // Agregar marcadores de ejemplo con información sobre residuos
-    var markers = [
-        { lat: 9.935, lng: -84.078, lugar: "San José", problema: "Acumulación de residuos sólidos" },
-        { lat: 9.99, lng: -84.11, lugar: "Heredia", problema: "Contaminación de ríos por desechos" },
-        { lat: 10.015, lng: -84.216, lugar: "Alajuela", problema: "Falta de centros de reciclaje" }
-    ];
-
-    markers.forEach(m => {
-        L.marker([m.lat, m.lng]).addTo(map)
-            .bindPopup(`<b>${m.lugar}</b><br>${m.problema}`);
-    });
+    
+    // Función para convertir coordenadas DMS (grados, minutos, segundos) a decimales
+    function convertirDMSaDecimal(dms) {
+        const regex = /(\d+)°(\d+)'(\d+)"([NS])\s+(\d+)°(\d+)'(\d+)"([EW])/;
+        let match = dms.match(regex);
+    
+        if (match) {
+            let lat = parseFloat(match[1]) + parseFloat(match[2]) / 60 + parseFloat(match[3]) / 3600;
+            let lng = parseFloat(match[5]) + parseFloat(match[6]) / 60 + parseFloat(match[7]) / 3600;
+    
+            if (match[4] === "S") lat *= -1;
+            if (match[8] === "W") lng *= -1;
+    
+            return { lat, lng };
+        }
+    
+        return null;
+    }
 });

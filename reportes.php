@@ -83,38 +83,75 @@
             </ul>
         </div>
         <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $provincia = $_POST['provincia'];
-    $canton = $_POST['canton'];
-    $distrito = $_POST['distrito'];
-    $barrio = $_POST['barrio'];
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
-    $descripcion = $_POST['descripcion'];
-    $coordenadasDMS = $_POST['coordenadasDMS'];
-    // Definir el nombre del archivo de reportes
-    $file = fopen("Reportes_residuos.txt", "a");
+$file_name = "Reportes_residuos.txt";
 
-    // Escribir los datos del formulario en el archivo
-    fwrite($file, "Provincia: " . $provincia . "\n");
-    fwrite($file, "Cantón: " . $canton . "\n");
-    fwrite($file, "Distrito: " . $distrito . "\n");
-    fwrite($file, "Barrio: " . $barrio . "\n");
-    fwrite($file, "Nombre: " . $nombre . "\n");
-    fwrite($file, "Email: " . $email . "\n");
-    fwrite($file, "Teléfono: " . $telefono . "\n");
-    fwrite($file, "Descripción: " . $descripcion . "\n");
-    fwrite($file, "Coordenadas: " . $coordenadasDMS . "\n");
-    fwrite($file, "----------------------------\n");
+// Ruta al archivo de reportes
+$archivo = "Reportes_residuos.txt";
 
-    
-    fclose($file);
-    echo "Reporte guardado exitosamente";
-} else {
-    echo "Error al abrir el archivo.";
+// Verifica si el archivo existe
+if (!file_exists($archivo)) {
+    echo json_encode(["error" => "El archivo no existe"]);
+    exit;
 }
+
+// Leer el contenido del archivo
+$contenido = file_get_contents($archivo);
+
+// Convertir cada línea en un array asociativo (suponiendo que el archivo tiene formato JSON por línea)
+$lineas = explode("\n", trim($contenido));
+$reportes = [];
+
+foreach ($lineas as $linea) {
+    $dato = json_decode($linea, true);
+    if ($dato) {
+        $reportes[] = $dato;
+    }
+}
+
+// Enviar los reportes como JSON
+header('Content-Type: application/json');
+echo json_encode($reportes);
+
+
+
+header("Content-Type: application/json");
+
+// Verifica si el archivo existe
+$archivo = "Reportes_residuos.txt";
+if (!file_exists($archivo)) {
+    echo json_encode([]);
+    exit;
+}
+
+// Lee el contenido del archivo
+$contenido = file_get_contents($archivo);
+$reportes = explode("---", $contenido); // Divide los reportes usando "---" como separador
+
+$datos = [];
+foreach ($reportes as $reporte) {
+    $lineas = explode("\n", trim($reporte));
+    $info = [];
+    
+    foreach ($lineas as $linea) {
+        if (strpos($linea, "Provincia:") !== false) {
+            $info["Provincia"] = trim(str_replace("Provincia:", "", $linea));
+        } elseif (strpos($linea, "Cantón:") !== false) {
+            $info["Cantón"] = trim(str_replace("Cantón:", "", $linea));
+        } elseif (strpos($linea, "Descripción:") !== false) {
+            $info["Descripción"] = trim(str_replace("Descripción:", "", $linea));
+        } elseif (strpos($linea, "Coordenadas:") !== false) {
+            $info["Coordenadas"] = trim(str_replace("Coordenadas:", "", $linea));
+        }
+    }
+
+    if (!empty($info)) {
+        $datos[] = $info;
+    }
+}
+
+echo json_encode($datos, JSON_PRETTY_PRINT);
 ?>
+
     </section>
     <footer>
         <p>&copy; 2025 Gestión de Residuos - Grupo 8 - Ambiente Web Cliente Servidor - Universidad Fidelitas</p>
