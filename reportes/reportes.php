@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes - Gestión de Residuos</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body>
@@ -15,11 +15,11 @@
         <h1>Gestión de Residuos - Reportes</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="mapa.html">Mapa</a></li>
-                <li><a href="recoleccion.html">Recolección</a></li>
-                <li><a href="educacion.html">Educación</a></li>
-                <li><a href="ranking.html">Ranking</a></li>
+                <li><a href="../index.php">Inicio</a></li>
+                <li><a href="../mapa.html">Mapa</a></li>
+                <li><a href="../recoleccion.html">Recolección</a></li>
+                <li><a href="../educacion.html">Educación</a></li>
+                <li><a href="../usuarios/ranking.html">Ranking</a></li>
             </ul>
         </nav>
     </header>
