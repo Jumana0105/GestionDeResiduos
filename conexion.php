@@ -1,5 +1,20 @@
 <?php
 require_once "conexion.php";
+// Conexión a la base de datos
+$host = "localhost"; //nombre de tu conexcion principal
+$username = "root"; //nombre de usuario de tu base de datos
+$password = ""; //contraseña de tu base de datos
+$dbname = "gestion_bd"; //nombre de tu base de datos
+
+
+//EN CASO QUE HAYA ERRORES EN LA CONEXION A LA BASE DE DATOS
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    // Activar excepciones
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  } catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+  }
 
 // Verifica si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
