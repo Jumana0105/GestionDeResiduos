@@ -15,7 +15,8 @@ $email = $_POST['email'];
 $telefono = $_POST['telefono'];
 $descripcion = $_POST['descripcion'];
 
-$sql_usuario =  "SELECT id_usuario FROM usuarios WHERE correo = ?";
+
+$sql_usuario =  "SELECT id FROM usuarios WHERE correo = ?";
 $stmt_usuario = $conn->prepare($sql_usuario);
 $stmt_usuario->bind_param("s", $email);
 $stmt_usuario->execute();
@@ -23,7 +24,7 @@ $result = $stmt_usuario->get_result();
 
 if ($result->num_rows > 0) {
     $usuario = $result->fetch_assoc();
-    $id_usuario = $usuario['id_usuario'];
+    $id_usuario = $usuario['id'];
 } else {
     $sql_insert_usuario = "INSERT INTO usuarios (nombre, correo, telefono, comunidad, contrasena) VALUES (?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert_usuario);
@@ -40,5 +41,6 @@ $stmt_reporte->execute();
 
 $conn->close();
 
-echo "<script>alert('Reporte enviado con éxito'); window.location.href='reportes.php';</script>";
+
+echo "<script>alert('Reporte enviado con éxito'); window.location.href='reportes.html';</script>";
 ?>
