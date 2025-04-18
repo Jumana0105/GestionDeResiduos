@@ -1,86 +1,68 @@
-CREATE DATABASE IF NOT EXISTS gestion_bd
+CREATE DATABASE IF NOT EXISTS gestion_bd;
 USE gestion_bd;
 
-create table talleres
-(
-    id          int auto_increment
-        primary key,
-    titulo      varchar(150) not null,
-    descripcion text         null,
-    fecha       date         null
+-- Tabla de talleres
+CREATE TABLE talleres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+    fecha DATE
 );
 
-create table usuarios
-(
-    id             int auto_increment
-        primary key,
-    nombre         varchar(100)                          not null,
-    correo         varchar(100)                          not null,
-    contrasena     varchar(255)                          not null,
-    direccion      text                                  null,
-    numero_casa    varchar(20)                           null,
-    comunidad      varchar(100)                          not null,
-    foto_perfil    varchar(255)                          null,
-    puntos         int       default 0                   null,
-    fecha_registro timestamp default current_timestamp() not null,
-    telefono       varchar(50)                           null,
-    constraint correo
-        unique (correo)
+-- Tabla de usuarios
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    direccion TEXT,
+    numero_casa VARCHAR(20),
+    comunidad VARCHAR(100) NOT NULL,
+    foto_perfil VARCHAR(255),
+    puntos INT DEFAULT 0,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    telefono VARCHAR(50)
 );
 
-create table inscripciones
-(
-    id                int auto_increment
-        primary key,
-    id_usuario        int                                   not null,
-    id_taller         int                                   not null,
-    fecha_inscripcion timestamp default current_timestamp() not null,
-    constraint inscripciones_ibfk_1
-        foreign key (id_usuario) references usuarios (id)
-            on update cascade on delete cascade,
-    constraint inscripciones_ibfk_2
-        foreign key (id_taller) references talleres (id)
-            on update cascade on delete cascade
+-- Tabla de inscripciones
+CREATE TABLE inscripciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_taller INT NOT NULL,
+    fecha_inscripcion TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_taller) REFERENCES talleres(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create index id_taller
-    on inscripciones (id_taller);
+-- Índices personalizados para inscripciones
+CREATE INDEX idx_inscripciones_usuario ON inscripciones(id_usuario);
+CREATE INDEX idx_inscripciones_taller ON inscripciones(id_taller);
 
-create index id_usuario
-    on inscripciones (id_usuario);
-
-create table recolecciones
-(
-    id               int auto_increment
-        primary key,
-    id_usuario       int                             not null,
-    tipo_residuo     varchar(100)                    null,
-    estado           varchar(50) default 'pendiente' null,
-    fecha_solicitada date                            null,
-    fecha_confirmada date                            null,
-    constraint recolecciones_ibfk_1
-        foreign key (id_usuario) references usuarios (id)
-            on update cascade on delete cascade
+-- Tabla de recolecciones
+CREATE TABLE recolecciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    tipo_residuo VARCHAR(100),
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    fecha_solicitada DATE,
+    fecha_confirmada DATE,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create index id_usuario
-    on recolecciones (id_usuario);
+-- Índice personalizado para recolecciones
+CREATE INDEX idx_recolecciones_usuario ON recolecciones(id_usuario);
 
-create table reportes
-(
-    id          int auto_increment
-        primary key,
-    id_usuario  int                                   not null,
-    descripcion text                                  not null,
-    foto        varchar(255)                          null,
-    ubicacion   varchar(200)                          null,
-    fecha       timestamp default current_timestamp() not null,
-    constraint reportes_ibfk_1
-        foreign key (id_usuario) references usuarios (id)
-            on update cascade on delete cascade
+-- Tabla de reportes
+CREATE TABLE reportes (
+    id_usuario INT NOT NULL,
+    descripcion TEXT NOT NULL,
+    ubicacion VARCHAR(200),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create index id_usuario
-    on reportes (id_usuario);
-
-
+-- Índice personalizado para reportes
+CREATE INDEX idx_reportes_usuario ON reportes(id_usuario);
