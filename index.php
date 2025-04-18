@@ -1,5 +1,4 @@
 <?php session_start(); ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -62,9 +61,7 @@
     <h1>Gestión de Residuos</h1>
     <div class="auth-buttons">
         <?php if (isset($_SESSION['usuario'])): ?>
-            <a href="usuarios/perfil_usuario.php">
-                <button>Mi perfil</button>
-            </a>
+            <a href="usuarios/perfil_usuario.php"><button>Mi perfil</button></a>
         <?php else: ?>
             <button onclick="mostrarModal('loginModal')">Iniciar sesión</button>
             <button onclick="mostrarModal('registroModal')">Registrarse</button>
@@ -72,11 +69,11 @@
     </div>
     <nav>
         <ul>
-            <li><a href="reportes/reportes.php">Reportes</a></li>
+            <li><a href="reportes.php">Reportes</a></li>
             <li><a href="mapa.html">Mapa</a></li>
             <li><a href="recoleccion.html">Recolección</a></li>
             <li><a href="educacion.html">Educación</a></li>
-            <li><a href="usuarios/ranking.html">Ranking</a></li>
+            <li><a href="ranking.html">Ranking</a></li>
         </ul>
     </nav>
 </header>
@@ -194,6 +191,7 @@
         </form>
     </div>
 </div>
+
 
 <!-- MODAL: Login -->
 <div id="loginModal" class="modal">
