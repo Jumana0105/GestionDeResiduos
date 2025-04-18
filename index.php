@@ -70,7 +70,7 @@
     <nav>
         <ul>
             <li><a href="reportes.php">Reportes</a></li>
-            <li><a href="mapa.html">Mapa</a></li>
+            <li><a href="mapa.php">Mapa</a></li>
             <li><a href="recoleccion.html">Recolección</a></li>
             <li><a href="educacion.html">Educación</a></li>
             <li><a href="ranking.html">Ranking</a></li>
