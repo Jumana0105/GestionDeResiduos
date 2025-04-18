@@ -19,8 +19,8 @@
     <h1>Mapa Interactivo</h1>
     <nav>
         <ul>
-            <li><a href="../index.html">Inicio</a></li>
-            <li><a href="../reportes.html">Reportes</a></li>
+            <li><a href="../index.php">Inicio</a></li>
+            <li><a href="../reportes/reportes.html">Reportes</a></li>
             <li><a href="mapa.php" class="activo">Mapa</a></li>
             <li><a href="../recoleccion.html">Recolección</a></li>
             <li><a href="../educacion.html">Educación</a></li>
