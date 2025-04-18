@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS gestion_bd
+USE gestion_bd;
+
 create table talleres
 (
     id          int auto_increment
