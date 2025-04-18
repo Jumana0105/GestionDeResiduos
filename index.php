@@ -69,7 +69,7 @@
     </div>
     <nav>
         <ul>
-            <li><a href="reportes.php">Reportes</a></li>
+            <li><a href="reportes.html">Reportes</a></li>
             <li><a href="mapa.html">Mapa</a></li>
             <li><a href="recoleccion.html">Recolección</a></li>
             <li><a href="educacion.html">Educación</a></li>
