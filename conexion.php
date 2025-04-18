@@ -18,7 +18,6 @@ try {
 
 // Verifica si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Sanitizar los datos
     $usuario = $_POST["usuario"];
     $descripcion = $_POST["descripcion"];
     $ubicacion = $_POST["ubicacion"];

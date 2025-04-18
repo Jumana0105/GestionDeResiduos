@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Residuos</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <style>
         .auth-buttons {
             position: absolute;
@@ -69,11 +69,11 @@
     </div>
     <nav>
         <ul>
-            <li><a href="reportes.php">Reportes</a></li>
-            <li><a href="mapa.html">Mapa</a></li>
-            <li><a href="recoleccion.html">Recolección</a></li>
-            <li><a href="educacion.html">Educación</a></li>
-            <li><a href="ranking.html">Ranking</a></li>
+            <li><a href="reportes/reportes.html">Reportes</a></li>
+            <li><a href="mapa/mapa.php">Mapa</a></li>
+            <li><a href="../GestionDeResiduos/recoleccion.html">Recolección</a></li>
+            <li><a href="../educacion.html">Educación</a></li>
+            <li><a href="usuarios/ranking.html">Ranking</a></li>
         </ul>
     </nav>
 </header>

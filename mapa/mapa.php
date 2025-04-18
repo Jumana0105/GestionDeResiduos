@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Interactivo</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -15,12 +15,11 @@
     <h1>Mapa Interactivo</h1>
     <nav>
         <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="reportes.html">Reportes</a></li>
-            <li><a href="mapa.php" class="activo">Mapa</a></li>
-            <li><a href="recoleccion.html">Recolección</a></li>
-            <li><a href="educacion.html">Educación</a></li>
-            <li><a href="ranking.html">Ranking</a></li>
+            <li><a href="../index.php">Inicio</a></li>
+            <li><a href="reportes/reportes.html">Reportes</a></li>
+            <li><a href="../recoleccion.html">Recolección</a></li>
+            <li><a href="../educacion.html">Educación</a></li>
+            <li><a href="usuarios/ranking.html">Ranking</a></li>
         </ul>
     </nav>
 </header>
@@ -39,10 +38,9 @@
     <p>© 2025 EcoVecindario - Todos los derechos reservados</p>
 </footer>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<!-- Inicializar mapa -->
+
 <script>
     var map = L.map('map').setView([9.7489, -83.7534], 8);
 
