@@ -42,5 +42,5 @@ $stmt_reporte->execute();
 $conn->close();
 
 
-echo "<script>alert('Reporte enviado con éxito'); window.location.href='reportes.html';</script>";
+echo "<script>alert('Reporte enviado con éxito'); window.location.href='/reportes/reportes.html';</script>";
 ?>
