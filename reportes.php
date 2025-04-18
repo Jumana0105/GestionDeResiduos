@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Gestión de Residuos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Reporte enviado");
+            form.submit();
+        });
+    });
+</script>
+<body>
+    <header>
+        <h1>Gestión de Residuos - Reportes</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.php">Inicio</a></li>
+                <li><a href="../mapa.html">Mapa</a></li>
+                <li><a href="../recoleccion.html">Recolección</a></li>
+                <li><a href="../educacion.html">Educación</a></li>
+                <li><a href="../usuarios/ranking.html">Ranking</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="reportes">
+        <h2>Reportar un Problema</h2>
+        <form method="POST" action="guardar_reporte.php">
+            <div class="form-group">
+                <label for="barrio">Barrio:</label>
+                <input type="text" id="barrio" name="barrio" required>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción del Problema:</label>
+                <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Enviar Reporte</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Gestión de Residuos - Grupo 8 - Ambiente Web Cliente Servidor - Universidad Fidelitas</p>
+    </footer>
+</body>
+</html>

@@ -3,7 +3,7 @@ require_once "conexion.php";
 // Conexión a la base de datos
 $host = "localhost"; //nombre de tu conexcion principal
 $username = "root"; //nombre de usuario de tu base de datos
-$password = ""; //contraseña de tu base de datos
+$password = "1234578"; //contraseña de tu base de datos
 $dbname = "gestion_bd"; //nombre de tu base de datos
 
 
