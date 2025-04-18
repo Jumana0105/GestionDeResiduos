@@ -32,13 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
                 $_SESSION['usuario'] = $usuario['nombre'];
                 $_SESSION['id'] = $usuario['id'];
                 $_SESSION['comunidad'] = $usuario['comunidad'];
-                header("Location: index.php");
+                header("Location: ../index.php");
                 exit();
             } else {
-                echo "Contraseña incorrecta.";
+                echo "<script>alert('Contraseña incorrecta.'); window.history.back();</script>";
+                exit();
             }
         } else {
-            echo "Correo no registrado.";
+            echo "<script>alert('Correo no registrado.'); window.history.back();</script>";
+            exit();
         }
 
     } elseif ($_POST['accion'] === 'registro') {
@@ -50,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
         $confirmar = $_POST['confirmar'];
 
         if ($contrasena !== $confirmar) {
-            echo "Las contraseñas no coinciden.";
+            echo "<script>alert('Las contraseñas no coinciden.'); window.history.back();</script>";
             exit();
         }
 
@@ -63,7 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
         $verificar->store_result();
 
         if ($verificar->num_rows > 0) {
-            echo "Este correo ya está registrado.";
+            echo "<script>alert('Este correo ya está registrado.'); window.history.back();</script>";
+            exit();
         } else {
             $sql = "INSERT INTO usuarios (nombre, correo, contrasena, comunidad) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
@@ -73,20 +76,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
                 $_SESSION['usuario'] = $nombre;
                 $_SESSION['id'] = $stmt->insert_id;
                 $_SESSION['comunidad'] = $comunidad;
-                header("Location: index.php");
+                header("Location: ../index.php");
+
                 exit();
             } else {
-                echo "Error al registrar usuario.";
+                echo "<script>alert('Error al registrar usuario.'); window.history.back();</script>";
+                exit();
             }
         }
 
     } else {
-        echo "Acción no reconocida.";
+        echo "<script>alert('Acción no reconocida.'); window.history.back();</script>";
+        exit();
     }
 
 } else {
-    echo "Solicitud no válida.";
+    echo "<script>alert('Solicitud no válida.'); window.history.back();</script>";
+    exit();
 }
 
-$conn->close();
-?>
+

@@ -9,7 +9,17 @@
     <title>Reportes - Gestión de Residuos</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita el envío del formulario para mostrar el mensaje
+            alert("Reporte enviado");
+            console.log("Reporte enviado");
+            form.submit(); // Envía el formulario después de mostrar el mensaje
+        });
+    });
+</script>
 <body>
     <header>
         <h1>Gestión de Residuos - Reportes</h1>
@@ -26,7 +36,6 @@
 
     <section id="reportes">
         <h2>Reportar un Problema</h2>
-        <!-- Formulario que envía los datos al mismo archivo PHP -->
         <form method="POST" action="">
             <div class="form-group">
                 <label for="provincia">Provincia:</label>
@@ -68,18 +77,12 @@
                 <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="coordenadasDMS">Coordenadas (DMS, opcional):</label>
-                <input type="text" id="coordenadasDMS" name="coordenadasDMS" placeholder="Ejemplo: 9°58'55\"N 84°01'25\"W">
-            </div>
-
             <button type="submit" class="submit-btn">Enviar Reporte</button>
         </form>
 
         <div id="reportesEnviados" class="reportes-enviados">
             <h3>Reportes Enviados</h3>
             <ul id="listaReportes">
-                <!-- Aquí se podrían listar los reportes almacenados si fuera necesario -->
             </ul>
         </div>
         <?php
