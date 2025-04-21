@@ -1,14 +1,7 @@
 <?php
 session_start();
 
-$conn = new mysqli('localhost', 'root', '', 'db_gestionresiduos');
-if ($conn->connect_error) die("Error de conexión");
-
-$id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
-if (!$id) {
-    header("Location: index.php");
-    exit();
-}
+include("../database/conexion.php");
 
 // Variables del formulario
 $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : '';
@@ -36,11 +29,11 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === 0) {
 // Armar consulta
 if ($foto_perfil) {
     $sql = "UPDATE usuarios SET nombre=?, telefono=?, direccion=?, comunidad=?, numero_casa=?, foto_perfil=? WHERE id=?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conexion->prepare($sql);
     $stmt->bind_param("ssssssi", $nombre, $telefono, $direccion, $comunidad, $numero_casa, $foto_perfil, $id);
 } else {
     $sql = "UPDATE usuarios SET nombre=?, telefono=?, direccion=?, comunidad=?, numero_casa=? WHERE id=?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conexion->prepare($sql);
     $stmt->bind_param("sssssi", $nombre, $telefono, $direccion, $comunidad, $numero_casa, $id);
 }
 
@@ -52,6 +45,6 @@ if ($stmt->execute()) {
     echo "Error al guardar los datos.";
 }
 
-$conn->close();
+$conexion->close();
 ?>
 

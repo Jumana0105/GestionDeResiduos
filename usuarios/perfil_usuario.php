@@ -1,17 +1,26 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', '', 'db_gestionresiduos');
-if ($conn->connect_error) die("Conexión fallida");
 
-$id_usuario = $_SESSION['id'] ?? null;
-
-if (!$id_usuario) {
-    header("Location: index.php");
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: ../index.php");
     exit();
 }
 
+include("../database/conexion.php");
+$id_usuario = $_SESSION['usuario_id'];
+
+
+// (solo para pruebas)
+// echo "<p>ID de sesión: " . $_SESSION['usuario_id'] . "</p>";
+
+include("../reportes/leer_reporte.php");
+$reportes = obtenerReportesDelUsuario($_SESSION['usuario_id']);
+include("../reportes/leer_recoleccion.php");
+$recolecciones = obtenerRecoleccionesDelUsuario($_SESSION['usuario_id']);
+
+
 $sql = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conexion->prepare($sql);
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $resultado = $stmt->get_result();
@@ -24,7 +33,7 @@ $usuario = $resultado->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -130,81 +139,138 @@ $usuario = $resultado->fetch_assoc();
         <ul>
             <li><a href="#info">Información básica</a></li>
             <li><a href="#reportes">Mis reportes</a></li>
-            <li><a href="#comentarios">Mis comentarios</a></li>
             <li><a href="#solicitudes">Mis solicitudes</a></li>
-            <li><a href="#educacion">Mi educación</a></li>
-            <li><a href="#ranking">Mi ranking</a></li>
             <li><a href="logout.php">Cerrar sesión</a></li>
         </ul>
     </div>
 
     <div class="content">
-        <section id="info" class="section">
-            <h2>Información Básica</h2>
-            <form action="guardar_perfil.php" method="POST" enctype="multipart/form-data">
-                <?php if (!empty($usuario['foto_perfil'])): ?>
-                    <img src="<?php echo $usuario['foto_perfil']; ?>" class="foto-preview" alt="Foto de perfil">
-                <?php endif; ?>
-                <div class="form-group">
-                    <label>Foto de perfil</label>
-                    <input type="file" name="foto_perfil">
-                </div>
-                <div class="form-group">
-                    <label>Nombre de usuario</label>
-                    <input type="text" name="nombre" value="<?php echo htmlspecialchars($usuario['nombre'] ?? ''); ?>">
-                </div>
-                <div class="form-group">
-                    <label>Correo electrónico</label>
-                    <input type="email" name="correo" value="<?php echo htmlspecialchars($usuario['correo'] ?? ''); ?>" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Número de teléfono</label>
-                    <input type="text" name="telefono" value="<?php echo htmlspecialchars($usuario['telefono'] ?? ''); ?>">
-                </div>
-                <div class="form-group">
-                    <label>Dirección</label>
-                    <textarea name="direccion"><?php echo htmlspecialchars($usuario['direccion'] ?? ''); ?></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Comunidad</label>
-                    <select name="comunidad">
-                        <option value="El Roble" <?php if (($usuario['comunidad'] ?? '') === 'El Roble') echo 'selected'; ?>>El Roble</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Número de casa</label>
-                    <input type="text" name="numero_casa" value="<?php echo htmlspecialchars($usuario['numero_casa'] ?? ''); ?>">
-                </div>
-                <button class="btn" type="submit">Guardar cambios</button>
-            </form>
-        </section>
+<section id="info" class="section">
+    <h2>Información Básica</h2>
+    <form action="guardar_perfil.php" method="POST" enctype="multipart/form-data">
+        <?php if (!empty($usuario['foto_perfil'])): ?>
+            <img src="<?php echo htmlspecialchars($usuario['foto_perfil']); ?>" class="foto-preview" alt="Foto de perfil">
+        <?php endif; ?>
 
-        <section id="reportes" class="section">
-            <h2>Mis Reportes</h2>
-            <a href="../reportes/reportes.php" class="btn">Crear nuevo reporte</a>
-            <!-- Aquí se listarían los reportes del usuario -->
-        </section>
+        <div class="form-group">
+            <label>Foto de perfil</label>
+            <input type="file" name="foto_perfil">
+        </div>
 
-        <section id="comentarios" class="section">
-            <h2>Mis Comentarios</h2>
-            <!-- Aquí se mostrarán los comentarios realizados -->
-        </section>
+        <div class="form-group">
+            <label>Nombre de usuario</label>
+            <input type="text" name="nombre" value="<?= htmlspecialchars($usuario['nombre'] ?? '') ?>">
+        </div>
 
-        <section id="solicitudes" class="section">
-            <h2>Mis Solicitudes</h2>
-            <a href="../recoleccion.html" class="btn">Crear nueva solicitud</a>
-            <!-- Aquí se mostrarán las solicitudes realizadas -->
-        </section>
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <input type="email" name="correo" value="<?= htmlspecialchars($usuario['correo'] ?? '') ?>" readonly>
+        </div>
 
-        <section id="educacion" class="section">
-            <h2>Mi Educación</h2>
-            <!-- Aquí se puede insertar un gráfico o resumen -->
-        </section>
+        <div class="form-group">
+            <label>Número de teléfono</label>
+            <input type="text" name="telefono" value="<?= htmlspecialchars($usuario['telefono'] ?? '') ?>">
+        </div>
 
-        <section id="ranking" class="section">
-            <h2>Mi Ranking</h2>
-            <!-- Aquí se puede mostrar el puesto del usuario -->
-        </section>
+        <div class="form-group">
+            <label>Dirección</label>
+            <textarea name="direccion"><?= htmlspecialchars($usuario['direccion'] ?? '') ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Comunidad</label>
+            <select name="comunidad">
+                <option value="El Roble" <?= ($usuario['comunidad'] ?? '') === 'El Roble' ? 'selected' : '' ?>>El Roble</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Número de casa</label>
+            <input type="text" name="numero_casa" value="<?= htmlspecialchars($usuario['numero_casa'] ?? '') ?>">
+        </div>
+
+        <button class="btn" type="submit">Guardar cambios</button>
+    </form>
+</section>
+
+
+<section id="reportes" class="section">
+    <div id="mis-reportes" class="tab-content">
+        <h3>Mis reportes</h3>
+
+        <?php if ($reportes->num_rows > 0): ?>
+            <table class="tabla-reportes">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Ubicación</th>
+                        <th>Descripción</th>
+                        <th>Foto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($row = $reportes->fetch_assoc()): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($row['id']) ?></td>
+                            <td><?= htmlspecialchars($row['fecha']) ?></td>
+                            <td><?= htmlspecialchars($row['ubicacion']) ?></td>
+                            <td><?= htmlspecialchars($row['descripcion']) ?></td>
+                            <td>
+                                <?php if (!empty($row['foto'])): ?>
+                                    <img src="uploads/<?= htmlspecialchars($row['foto']) ?>" alt="Foto">
+                                <?php else: ?>
+                                    Sin foto
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>No has realizado reportes aún.</p>
+        <?php endif; ?>
+
+        <a href="../reportes/reportes.php" class="btn btn-reporte">Crear nuevo reporte</a>
+    </div>
+</section>
+
+<section id="solicitudes" class="section">
+    <h2>Mis Solicitudes</h2>
+
+    <?php if ($recolecciones->num_rows > 0): ?>
+        <table class="tabla-reportes">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tipo de residuo</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                    <th>Fecha solicitada</th>
+                    <th>Fecha confirmada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while($row = $recolecciones->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['id']) ?></td>
+                        <td><?= htmlspecialchars($row['tipo_residuo']) ?></td>
+                        <td><?= htmlspecialchars($row['direccion']) ?></td>
+                        <td><?= htmlspecialchars($row['estado']) ?></td>
+                        <td><?= htmlspecialchars($row['fecha_solicitada']) ?></td>
+                        <td><?= $row['fecha_confirmada'] ? htmlspecialchars($row['fecha_confirmada']) : '—' ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No has realizado solicitudes de recolección aún.</p>
+    <?php endif; ?>
+
+    <a href="../reportes/recoleccion.php" class="btn btn-reporte">Crear nueva solicitud</a>
+</section>
+
+
     </div>
 </div>
 </body>

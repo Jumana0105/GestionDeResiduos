@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['accion'])) {
             $usuario = $resultado->fetch_assoc();
             if (password_verify($contrasena, $usuario['contrasena'])) {
                 $_SESSION['usuario'] = $usuario['nombre'];
-                $_SESSION['id'] = $usuario['id'];
+                $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['comunidad'] = $usuario['comunidad'];
                 header("Location: ../index.php");
                 exit();

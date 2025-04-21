@@ -1,12 +1,18 @@
 /* ============================= */
 /* Estilos generales del cuerpo */
 /* ============================= */
-body {
-    font-family: 'Arial', sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Estilos únicos para el header */
@@ -72,6 +78,16 @@ section {
     font-size: 16px;
     color: #155724;
     text-align: left;
+}
+
+
+#importancia-gestion .importancia-item img {
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
 }
 
 /* ============================= */
@@ -320,11 +336,12 @@ footer p {
 #reportes {
     max-width: 800px;
     margin: 30px auto;
-    padding: 20px;
+    padding: 60px;
     background: white;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 h2 {
     text-align: center;
@@ -332,7 +349,7 @@ h2 {
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 label {
@@ -542,7 +559,7 @@ h3 {
     text-align: center; /* Centra los títulos */
 }
 .titulo-ranking, .titulo-acciones {
-    text-align: center; 
+    text-align: center;
     display: block;
     font-weight: bold;
 }
@@ -597,42 +614,16 @@ iframe {
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-/* Estilos para la sección de Guía de Reciclaje */
-.categorias-residuos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    padding: 20px;
+
+
+main {
+    flex: 1;
 }
 
-.categoria {
-    width: 200px;
-    text-align: center;
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
+/* ============================= */
+/* Estilos para sección Educación */
+/* ============================= */
 
-.categoria img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.video-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.video-container iframe {
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
 .categorias-residuos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -641,7 +632,7 @@ iframe {
     justify-items: center;
 }
 
-.categoria {
+.tarjeta {
     background: #ffffff;
     border-radius: 10px;
     padding: 15px;
@@ -649,23 +640,117 @@ iframe {
     text-align: center;
     width: 100%;
     max-width: 300px;
+    height: 300px;
     transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 }
 
-.categoria:hover {
+.tarjeta:hover {
     transform: scale(1.05);
 }
 
-.categoria img {
+.tarjeta img {
     width: 120px;
     height: 120px;
     object-fit: contain;
     margin-bottom: 10px;
 }
 
-.categoria p {
+.tarjeta p {
     font-size: 14px;
     color: #333;
+}
+
+/* ============================= */
+/* Estilos para modal educativo */
+/* ============================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background: #fff;
+    opacity: 1;
+    filter: none;
+    padding: 30px;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.video-responsive {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.video-responsive iframe {
+    background-color: #000;
+    opacity: 1;
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+/* Estilos para tablas de reportes, recolecciones, etc. */
+.tabla-reportes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.tabla-reportes th,
+.tabla-reportes td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-reportes th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.tabla-reportes tr:hover {
+    background-color: #f5f5f5;
+}
+
+.tabla-reportes img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.btn-reporte {
+    display: inline-block;
+    margin-top: 20px;
 }
 
 

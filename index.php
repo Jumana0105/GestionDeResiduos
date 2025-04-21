@@ -7,53 +7,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Residuos</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .auth-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .auth-buttons button {
-            margin-left: 10px;
-            padding: 10px;
-            background: #fff;
-            color: #2c3e50;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            position: relative;
-        }
-        .modal-content input, .modal-content button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-        }
-        .close {
-            position: absolute;
-            right: 10px;
-            top: 5px;
-            cursor: pointer;
-            font-size: 20px;
-        }
-    </style>
+        <style>
+            .auth-buttons {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .auth-buttons button {
+                margin-left: 10px;
+                padding: 10px;
+                background: #fff;
+                color: #2c3e50;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 9999;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            .modal-content {
+                background-color: #fff;
+                margin: 10% auto;
+                padding: 20px;
+                border-radius: 10px;
+                width: 300px;
+                position: relative;
+            }
+            .modal-content input, .modal-content button {
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0;
+            }
+            .close {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                cursor: pointer;
+                font-size: 20px;
+            }
+        </style>
 </head>
 
 <body>
@@ -69,11 +69,12 @@
     </div>
     <nav>
         <ul>
-            <li><a href="reportes/reportes.html">Reportes</a></li>
+            <li><a >Inicio</a></li>
+            <li><a href="reportes/reportes.php">Reportes</a></li>
             <li><a href="mapa/mapa.php">Mapa</a></li>
-            <li><a href="../GestionDeResiduos/recoleccion.html">Recolección</a></li>
-            <li><a href="../educacion.html">Educación</a></li>
-            <li><a href="usuarios/ranking.html">Ranking</a></li>
+            <li><a href="reportes/recoleccion.php">Recolección</a></li>
+            <li><a href="usuarios/educacion.php">Educación</a></li>
+            <li><a href="usuarios/ranking.php">Ranking</a></li>
         </ul>
     </nav>
 </header>
